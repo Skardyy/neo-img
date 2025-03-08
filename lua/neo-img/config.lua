@@ -10,6 +10,7 @@ local M = {}
 --- @field resizeMode "Fit"|"Stretch"|"Crop" Resize mode for images
 --- @field offset string Offset for positioning (e.g., "0x3")
 --- @field ttyimg "local"|"global" which ttyimg is preferred
+--- @field winsize string the win size for fallback if spx fails in checkhealth
 --- @field bin_path? string Path to the ttyimg binary (populated at runtime)
 --- @field os? string the OS of the machine (populated at runtime)
 --- @field window_size? {spx: NeoImg.Size, sc: NeoImg.Size} window size fallbacks in px and cells (populated at runtime)
@@ -49,8 +50,13 @@ M.defaults = {
   backend = "auto",   -- auto / kitty / iterm / sixel
   resizeMode = "Fit", -- Fit / Strech / Crop
   offset = "2x3",     -- that exmp is 2 cells offset x and 3 y.
-  ttyimg = "local"    -- local / global
+  ttyimg = "local",   -- local / global
   ----- Less Important -----
+
+  ----- If Spx fails in checkhealth -----
+  winsize =
+  "1920x1080" -- do printf "\x1b[14t" in your terminal to get <heigt;width t> put here <width>x<height> (only relevant if checkhealth spx query warns)
+  ----- If Spx fails in checkhealth -----
 }
 
 local config = M.defaults
@@ -171,6 +177,7 @@ function M.validate_config(opts)
     resizeMode = is_valid_resize_mode(opts.resizeMode) and opts.resizeMode or defaults.resizeMode,
     offset = is_valid_offset(opts.offset) and opts.offset or defaults.offset,
     ttyimg = is_valid_ttyimg(opts.ttyimg) and opts.ttyimg or defaults.ttyimg,
+    winsize = is_valid_offset(opts.winsize) and opts.winsize or defaults.winsize,
 
     bin_path = type(opts.bin_path) == "string" and opts.bin_path or nil,
     os = type(opts.os) == "string" and opts.os or nil,

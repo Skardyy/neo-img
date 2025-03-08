@@ -80,7 +80,11 @@ require('neo-img').setup({
   backend = "auto",   -- auto / kitty / iterm / sixel
   resizeMode = "Fit", -- Fit / Strech / Crop
   offset = "2x3",     -- that exmp is 2 cells offset x and 3 y.
-  ttyimg = "local"    -- local / global
+  ttyimg = "local",   -- local / global
   ----- Less Important -----
+
+  ----- If Spx fails in checkhealth -----
+  winsize = "1920x1080" -- do printf "\x1b[14t" in your terminal to get <height>;<width>t put here <width>x<height> (only relevant if checkhealth spx query warns)
+  ----- If Spx fails in checkhealth -----
 })
 ```  

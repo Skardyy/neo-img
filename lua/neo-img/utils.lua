@@ -44,9 +44,10 @@ function M.get_window_size_fallback()
   local config = main_config.get()
   local os = M.get_os_arch()
   config.os = os
+  local width, height = config.winsize:match("(%d+)x(%d+)")
   local spx = {
-    x = 1920,
-    y = 1080
+    x = width,
+    y = height
   }
   local sc = {
     x = vim.o.columns,
