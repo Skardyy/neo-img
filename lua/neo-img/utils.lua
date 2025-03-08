@@ -66,7 +66,7 @@ function M.get_window_size_fallback()
     ]]
     local TIOCGWINSZ = config.os == "linux" and 0x5413 or 0x40087468
     local winsize = ffi.new("struct winsize")
-    local success = ffi.C.ioctl(0, TIOCGWINSZ, winsize)
+    local success = ffi.C.ioctl(1, TIOCGWINSZ, winsize)
     if success == 0 then
       spx.x = winsize.ws_xpixel
       spx.y = winsize.ws_ypixel

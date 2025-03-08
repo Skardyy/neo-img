@@ -94,7 +94,9 @@ end
 --- cleans the screen if needed
 function Image.Delete()
   if Image.Should_Clean() then
+    local original_normal = vim.api.nvim_get_hl_by_name("Normal", true)
     vim.api.nvim_command("mode")
+    vim.api.nvim_set_hl(0, "Normal", { bg = original_normal.bg, fg = original_normal.fg })
   end
   Image.StopJob()
 end
